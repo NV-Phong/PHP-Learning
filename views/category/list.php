@@ -47,5 +47,6 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+    <a href="/category/create">Thêm danh mục mới</a>
 </body>
 </html>
