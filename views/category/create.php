@@ -1,45 +1,26 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Thêm danh mục</title>
-    <style>
-        .form-container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
-<body>
-    <div class="form-container">
-        <h1>Thêm danh mục mới</h1>
-        <form method="POST" action="/category/create">
-            <div class="form-group">
-                <label for="name">Tên danh mục:</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Mô tả:</label>
-                <textarea id="description" name="description" rows="4"></textarea>
-            </div>
-            <button type="submit">Thêm</button>
-            <a href="/categories">Quay lại</a>
-        </form>
-    </div>
-</body>
-</html>
+<?php
+ob_start();
+?>
+
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">Thêm danh mục mới</h1>
+    <form method="POST" action="/category/create" class="space-y-4">
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Tên danh mục:</label>
+            <input type="text" id="name" name="name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2">
+        </div>
+        <div>
+            <label for="description" class="block text-sm font-medium text-gray-700">Mô tả:</label>
+            <textarea id="description" name="description" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"></textarea>
+        </div>
+        <div class="flex space-x-3">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Thêm</button>
+            <a href="/category/list" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Quay lại</a>
+        </div>
+    </form>
+</div>
+
+<?php
+$content = ob_get_clean();
+$title = "Thêm danh mục";
+require_once __DIR__ . '/../layout.php';

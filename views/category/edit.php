@@ -1,51 +1,32 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Sửa danh mục</title>
-    <style>
-        .form-container {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-    </style>
-</head>
-<body>
-    <div class="form-container">
-        <h1>Sửa danh mục</h1>
-        <form method="POST" action="/category/edit/<?php echo $category['IDCategory']; ?>">
-            <div class="form-group">
-                <label for="name">Tên danh mục:</label>
-                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($category['CategoryName']); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Mô tả:</label>
-                <textarea id="description" name="description" rows="4"><?php echo htmlspecialchars($category['CategoryDescription']); ?></textarea>
-            </div>
-            <div class="form-group">
-                <label for="isDeleted">
-                    <input type="checkbox" id="isDeleted" name="isDeleted" <?php echo $category['IsDeleted'] ? 'checked' : ''; ?>>
-                    Đánh dấu đã xóa
-                </label>
-            </div>
-            <button type="submit">Cập nhật</button>
-            <a href="/categories">Quay lại</a>
-        </form>
-    </div>
-</body>
-</html>
+<?php
+ob_start();
+?>
+
+<div class="bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-gray-800 mb-4">Sửa danh mục</h1>
+    <form method="POST" action="/category/edit/<?php echo $category['IDCategory']; ?>" class="space-y-4">
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Tên danh mục:</label>
+            <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($category['CategoryName']); ?>" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2">
+        </div>
+        <div>
+            <label for="description" class="block text-sm font-medium text-gray-700">Mô tả:</label>
+            <textarea id="description" name="description" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2"><?php echo htmlspecialchars($category['CategoryDescription']); ?></textarea>
+        </div>
+        <div>
+            <label for="isDeleted" class="flex items-center">
+                <input type="checkbox" id="isDeleted" name="isDeleted" <?php echo $category['IsDeleted'] ? 'checked' : ''; ?> class="mr-2">
+                <span class="text-sm font-medium text-gray-700">Đánh dấu đã xóa</span>
+            </label>
+        </div>
+        <div class="flex space-x-3">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Cập nhật</button>
+            <a href="/category/list" class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Quay lại</a>
+        </div>
+    </form>
+</div>
+
+<?php
+$content = ob_get_clean();
+$title = "Sửa danh mục";
+require_once __DIR__ . '/../layout.php'; // Đường dẫn đã đúng
