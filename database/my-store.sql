@@ -18,12 +18,12 @@ CREATE TABLE PRODUCT(
 	ImageURL 				VARCHAR(255) DEFAULT NULL,
 	IsDeleted				BOOLEAN NOT NULL,
 	FOREIGN KEY (IDCategory) REFERENCES CATEGORY (IDCategory)
-
 )
 
 INSERT INTO CATEGORY (CategoryName, CategoryDescription, IsDeleted) VALUES
 ('Electronics', 'Electronic devices and gadgets', false),
 ('Clothing', 'Apparel and accessories', false),
+('Chưa Được Phân Loại', 'Chưa được phân loại danh mục', false),
 ('Books', 'Reading materials and literature', false);
 
 INSERT INTO PRODUCT (IDCategory, ProductName, ProductDescription, Price, ImageURL, IsDeleted) VALUES

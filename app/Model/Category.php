@@ -59,4 +59,31 @@ class Category
       $stmt->bindParam(":id", $id);
       return $stmt->execute();
    }
+
+   // Phương thức mới: Tìm hoặc tạo danh mục mặc định "Không phân loại"
+   public function findOrCreateDefaultCategory()
+   {
+      $defaultName = "Chưa Được Phân Loại";
+      $sql = "SELECT IDCategory FROM {$this->table} WHERE CategoryName = :name AND IsDeleted = 0";
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":name", $defaultName);
+      $stmt->execute();
+      $category = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      if ($category) {
+         return $category['IDCategory'];
+      }
+
+      // Nếu không tìm thấy, tạo danh mục "Không phân loại"
+      $description = "Danh mục mặc định cho các sản phẩm không thuộc danh mục nào";
+      $isDeleted = 0;
+      $this->create($defaultName, $description, $isDeleted);
+
+      // Lấy lại IDCategory của danh mục vừa tạo
+      $stmt = $this->conn->prepare($sql);
+      $stmt->bindParam(":name", $defaultName);
+      $stmt->execute();
+      $category = $stmt->fetch(PDO::FETCH_ASSOC);
+      return $category['IDCategory'];
+   }
 }
