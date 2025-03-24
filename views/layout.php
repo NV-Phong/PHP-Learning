@@ -20,7 +20,7 @@
     <nav class="navbar">
         <div class="container flex justify-between items-center">
             <div>
-                <a href="/product/list" class="text-lg font-bold">Quản lý sản phẩm</a>
+                <a href="/product/list" class="text-lg font-bold">QUẢN LÝ SINH VIÊN</a>
             </div>
             <div>
                 <a href="/product/list">Danh sách sản phẩm</a>

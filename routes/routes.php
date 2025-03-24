@@ -2,6 +2,7 @@
 use Illuminate\Routing\Router;
 use Phong\Controller\CategoryController;
 use Phong\Controller\ProductController;
+use Phong\Controller\SinhVienController;
 
 return function (Router $router) {
    // Nhóm routes cho Category
@@ -32,5 +33,21 @@ return function (Router $router) {
       $router->get('/delete/{id}', [ProductController::class, 'delete']);
 
       $router->get('/{id}', [ProductController::class, 'show']);
+   });
+
+   // Nhóm routes cho SinhVien
+   $router->group(['prefix' => 'sinhvien'], function (Router $router) {
+      $router->get('/list', [SinhVienController::class, 'index']);
+
+      $router->get('/create', [SinhVienController::class, 'create']);
+      $router->post('/create', [SinhVienController::class, 'create']);
+
+      $router->get('/edit/{id}', [SinhVienController::class, 'edit']);
+      $router->post('/edit/{id}', [SinhVienController::class, 'edit']);
+
+      $router->get('/delete/{id}', [SinhVienController::class, 'delete']);
+      $router->post('/delete/{id}', [SinhVienController::class, 'delete']);
+
+      $router->get('/{id}', [SinhVienController::class, 'show']);
    });
 };
