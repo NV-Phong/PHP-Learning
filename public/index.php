@@ -12,5 +12,9 @@ $DB = new Database()->connect();
 // Bind PDO vào container
 $container->instance('PDO', $DB);
 
+if (session_status() === PHP_SESSION_NONE) {
+   session_start();
+}
+
 // Gọi RouterConfig với container
 RouterConfig($container);

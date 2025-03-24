@@ -3,6 +3,8 @@ use Illuminate\Routing\Router;
 use Phong\Controller\CategoryController;
 use Phong\Controller\ProductController;
 use Phong\Controller\SinhVienController;
+use Phong\Controller\DangKyHocPhanController;
+use Phong\Controller\AuthController;
 
 return function (Router $router) {
    // Nhóm routes cho Category
@@ -50,4 +52,19 @@ return function (Router $router) {
 
       $router->get('/{id}', [SinhVienController::class, 'show']);
    });
+
+   // Nhóm routes cho Đăng ký học phần
+   $router->group(['prefix' => 'dangkyhocphan'], function (Router $router) {
+      $router->get('/', [DangKyHocPhanController::class, 'index']);
+      $router->get('/add/{maHP}', [DangKyHocPhanController::class, 'addToCart']);
+      $router->get('/cart', [DangKyHocPhanController::class, 'cart']);
+      $router->get('/cart/remove/{maHP}', [DangKyHocPhanController::class, 'removeFromCart']);
+      $router->get('/cart/clear', [DangKyHocPhanController::class, 'clearCart']);
+      $router->get('/confirm', [DangKyHocPhanController::class, 'confirm']); // Thêm route cho xác nhận
+      $router->post('/save', [DangKyHocPhanController::class, 'save']); // Thay đổi save thành POST
+   });
+
+   $router->get('/login', [AuthController::class, 'login']);
+   $router->post('/login', [AuthController::class, 'login']);
+   $router->get('/logout', [AuthController::class, 'logout']);
 };
