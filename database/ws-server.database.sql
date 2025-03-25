@@ -41,7 +41,7 @@ CREATE TABLE WORkSPACE
 (
    IDWorkSpace          CHAR(36) PRIMARY KEY DEFAULT(UUID()),
    IDUser               CHAR(36) NOT NULL,
-   WorkSpaceName        VARCHAR(255) UNIQUE NOT NULL,
+   WorkSpaceName        VARCHAR(255) NOT NULL,
    WorkSpaceDescription TEXT,
    IsDeleted            BOOLEAN NOT NULL DEFAULT FALSE, 
    FOREIGN KEY (IDUser) REFERENCES USERS (IDUser) ON DELETE CASCADE

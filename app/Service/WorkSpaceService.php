@@ -14,34 +14,33 @@ class WorkSpaceService
       $this->userService = $userService;
    }
 
-   public function getAllWorkSpaces()
+   public function getAllWorkSpaces($IDUser)
    {
-      return WorkSpace::where('IsDeleted', false)->get();
+      return WorkSpace::select("IDWorkspace", "WorkSpaceName", "WorkSpaceDescription")
+      ->where([
+         ['IDUser', $IDUser],
+         ['IsDeleted', false]
+      ])->get();
    }
-   public function createWorkSpace($data)
+   public function createWorkSpace($data, $IDUser)
    {
-      $user = $this->userService->findUser('IDUser', $data['IDUser']);
-      if (!$user) {
-         throw new Exception('Không tìm thấy User');
+      $workSpace = $this->findWorkSpace('WorkSpaceName', $data['WorkSpaceName'], $IDUser);
+      if ($workSpace) {
+         throw new Exception('Tên WorkSpace đã tồn tại');
       }
       else {
-         $workSpace = $this->findWorkSpace('WorkSpaceName', $data['WorkSpaceName']);
-         if ($workSpace) {
-            throw new Exception('Tên WorkSpace đã tồn tại');
-         }
-         else {
-            return WorkSpace::create([
-               "IDUser" => $data["IDUser"],
-               "WorkSpaceName" => $data["WorkSpaceName"],
-               "WorkSpaceDescription" => $data["WorkSpaceDescription"],
-            ]);
-         }
+         return WorkSpace::create([
+            "IDUser" => $IDUser,
+            "WorkSpaceName" => $data["WorkSpaceName"],
+            "WorkSpaceDescription" => $data["WorkSpaceDescription"],
+         ]);
       }
    }
 
-   public function findWorkSpace($field, $value)
+   public function findWorkSpace($field, $value, $IDUser)
    {
       $workSpace = WorkSpace::where($field, $value)
+         ->where('IDUser', $IDUser)
          ->where('IsDeleted', false)
          ->first();
 

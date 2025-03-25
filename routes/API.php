@@ -21,6 +21,6 @@ return function (Router $router) {
 
    $router->group(['prefix'=> 'workspace'], function (Router $router){
       $router->get('/',[WorkSpaceController::class, 'index'])->middleware('auth');
-      $router->post('/create',[WorkSpaceController::class, 'create'])->middleware('auth');
+      $router->post('/',[WorkSpaceController::class, 'create'])->middleware('auth');
    });
 };

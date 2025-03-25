@@ -17,7 +17,9 @@ class WorkSpaceController
    public function index(Request $request): JsonResponse
    {
       try {
-         $workspaces = $this->WSService->getAllWorkSpaces();
+         $IDUser = $request->attributes->get('USER')['IDUser'];
+         print_r($IDUser);
+         $workspaces = $this->WSService->getAllWorkSpaces($IDUser);
          return new JsonResponse([
             'message' => 'Danh sách WorkSpace',
             'data' => $workspaces
@@ -32,7 +34,8 @@ class WorkSpaceController
    public function create(Request $request): JsonResponse
    {
       try {
-         $workSpace = $this->WSService->createWorkSpace($request->json()->all());
+         $IDUser = $request->attributes->get('USER')['IDUser'];
+         $workSpace = $this->WSService->createWorkSpace($request->json()->all(), $IDUser);
          return new JsonResponse([
             'message' => 'Tạo WorkSpace thành công',
             'data' => $workSpace
