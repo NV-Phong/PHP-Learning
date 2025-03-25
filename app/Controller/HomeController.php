@@ -14,7 +14,7 @@ class HomeController
    public function getUserInfoFromRequest(Request $request): JsonResponse
    {
       $user = $request->attributes->get('USER');
-      // print_r($user);
+      $IDUser = $user['IDUser'];
       return new JsonResponse([
          'message' => 'User Inf',
          'user' => $user
