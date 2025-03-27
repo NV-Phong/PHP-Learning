@@ -3,6 +3,7 @@ use Illuminate\Routing\Router;
 use WorkSpace\Controller\AuthController;
 use WorkSpace\Controller\SystemController;
 use WorkSpace\Controller\WorkSpaceController;
+use WorkSpace\Controller\TeamController;
 use Middleware\Authenticate;
 
 return function (Router $router) {
@@ -30,4 +31,11 @@ return function (Router $router) {
       $router->get('/', [WorkSpaceController::class, 'getWorkSpacesByIDUser']);
       $router->post('/', [WorkSpaceController::class, 'createWorkSpace']);
    });
+
+//--------------------------------------------------TEAM--------------------------------------------------//
+
+
+   $router->group(['prefix'=> 'team','middleware' => 'auth'], function (Router $router) {
+        $router->get('/', [TeamController::class, 'getTeamsByIDUser']);
+      });  
 };
