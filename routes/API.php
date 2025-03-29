@@ -29,5 +29,6 @@ return function (Router $router) {
    $router->group(['prefix' => 'workspace', 'middleware' => 'auth'], function (Router $router) {
       $router->get('/', [WorkSpaceController::class, 'getWorkSpacesByIDUser']);
       $router->post('/', [WorkSpaceController::class, 'createWorkSpace']);
+      $router->delete('/{id}', [WorkSpaceController::class, 'deleteWorkSpace']);
    });
 };
