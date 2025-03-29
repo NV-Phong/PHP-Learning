@@ -4,6 +4,7 @@ use WorkSpace\Controller\AuthController;
 use WorkSpace\Controller\SystemController;
 use WorkSpace\Controller\WorkSpaceController;
 use WorkSpace\Controller\TeamController;
+use WorkSpace\Controller\StatusController;
 use Middleware\Authenticate;
 
 return function (Router $router) {
@@ -38,4 +39,12 @@ return function (Router $router) {
    $router->group(['prefix'=> 'team','middleware' => 'auth'], function (Router $router) {
         $router->get('/', [TeamController::class, 'getTeamsByIDUser']);
       });  
+
+//--------------------------------------------------STASTUS--------------------------------------------------//   
+
+   $router->group(['prefix'=> 'status','middleware' => 'auth'], function (Router $router) {
+        $router->get('/', [StatusController::class, 'getAllStatuses']);
+        $router->post('/create', [StatusController::class, 'createStatus']);
+      });
 };
+
