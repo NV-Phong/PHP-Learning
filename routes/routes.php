@@ -5,8 +5,26 @@ use Phong\Controller\ProductController;
 use Phong\Controller\SinhVienController;
 use Phong\Controller\DangKyHocPhanController;
 use Phong\Controller\AuthController;
+use Phong\Controller\API\CategoryAPIController;
+use Phong\Controller\API\ProductAPIController;
 
 return function (Router $router) {
+   // API routes
+   $router->group(['prefix' => 'api'], function (Router $router) {
+      $router->get('/category', [CategoryAPIController::class, 'getAll']);
+      $router->get('/product', [ProductAPIController::class, 'getAll']);
+      $router->post('/category', [CategoryAPIController::class, 'create']);
+      $router->post('/product', [ProductAPIController::class, 'create']);
+      $router->get('/category/{id}', [CategoryAPIController::class, 'getById']);
+      $router->get('/product/{id}', [ProductAPIController::class, 'getById']);
+      $router->put('/category/{id}', [CategoryAPIController::class, 'update']);
+      $router->put('/product/{id}', [ProductAPIController::class, 'update']);
+      $router->delete('/category/{id}', [CategoryAPIController::class, 'delete']);
+      $router->delete('/product/{id}', [ProductAPIController::class, 'delete']);
+   });
+
+
+
    // Nhóm routes cho Category
    $router->group(['prefix' => 'category'], function (Router $router) {
       $router->get('/list', [CategoryController::class, 'index']);
