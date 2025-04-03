@@ -58,6 +58,8 @@ return function (Router $router) {
    $router->group(['prefix'=> 'team','middleware' => 'auth'], function (Router $router) {
         $router->get('/', [TeamController::class, 'getTeamsByIDUser']);
         $router->post('/', [TeamController::class, 'createTeam']);
+        $router->delete('/{IDTeam}', [TeamController::class,'leaveTeam']);
+
       });  
 
 //--------------------------------------------------STASTUS--------------------------------------------------//   
