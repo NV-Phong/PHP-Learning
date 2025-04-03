@@ -8,6 +8,7 @@ use WorkSpace\Controller\StatusController;
 use WorkSpace\Controller\ProjectController;
 use WorkSpace\Controller\NoteController;
 use WorkSpace\Controller\WidgetController;
+use WorkSpace\Controller\TaskController;
 use Middleware\Authenticate;
 
 return function (Router $router) {
@@ -68,4 +69,10 @@ return function (Router $router) {
         $router->get('/', [StatusController::class, 'getAllStatuses']);
         $router->post('/create', [StatusController::class, 'createStatus']);
       });
+ //--------------------------------------------------TASK--------------------------------------------------//   
+
+      $router->group(['prefix'=> 'task','middleware' => 'auth'], function (Router $router) {
+         $router->get('/', [TaskController::class, 'getAllTasks']);
+         //$router->post('/create', [StatusController::class, 'createStatus']);
+       });     
 };
