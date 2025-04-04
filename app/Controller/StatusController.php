@@ -52,4 +52,19 @@ class StatusController
             ], 400);
         }
     }
+    public function deleteStatus(Request $request, $IDStatus): JsonResponse   
+    {
+        try {
+            $IDUser = $request->attributes->get('USER')['IDUser']; 
+            $result = $this->statusService->deleteStatus($IDStatus);
+
+            return new JsonResponse([
+                'message' => $result['message']
+            ], 200);
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
 }

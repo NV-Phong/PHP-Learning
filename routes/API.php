@@ -68,6 +68,7 @@ return function (Router $router) {
    $router->group(['prefix'=> 'status','middleware' => 'auth'], function (Router $router) {
         $router->get('/', [StatusController::class, 'getAllStatuses']);
         $router->post('/create', [StatusController::class, 'createStatus']);
+        $router->delete('/{IDStatus}', [StatusController::class, 'deleteStatus']);
       });
 };
 
