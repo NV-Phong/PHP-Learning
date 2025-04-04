@@ -2,6 +2,7 @@
 namespace WorkSpace\Service;
 
 use WorkSpace\Model\Status;
+use WorkSpace\Model\Task;
 use Exception;
 
 class StatusService
@@ -63,5 +64,25 @@ class StatusService
         } catch (Exception $e) {
             throw new Exception("Error fetching statuses: " . $e->getMessage());
         }
+    }
+    public function deleteStatus($IDStatus)
+    {
+            $status = Status::where('IDStatus', $IDStatus)
+                            ->where('IsDeleted', false)
+                            ->first();
+            if (!$status) {
+                throw new Exception('Status not found, already deleted, or you do not have permission to delete it');
+            }
+            $tasks = Task::where('IDStatus', $IDStatus)
+                     ->where('IsDeleted', false)
+                     ->get();
+
+            foreach ($tasks as $task) {
+                $task->IsDeleted = true;
+                $task->save();
+            }
+                $status->IsDeleted = true;
+                $status->save();
+                return ['message' => 'Status deleted successfully'];
     }
 } 
