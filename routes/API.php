@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Routing\Router;
 use WorkSpace\Controller\AuthController;
 use WorkSpace\Controller\SystemController;
@@ -35,7 +36,7 @@ return function (Router $router) {
    $router->group(['prefix' => 'workspace', 'middleware' => 'auth'], function (Router $router) {
       $router->get('/', [WorkSpaceController::class, 'getWorkSpacesByIDUser']);
       $router->post('/', [WorkSpaceController::class, 'createWorkSpace']);
-      $router->get('/{IDWorkSpace}', [WorkSpaceController::class,'getWorkSpacesByIDWorkSpace']);
+      $router->get('/{IDWorkSpace}', [WorkSpaceController::class, 'getWorkSpacesByIDWorkSpace']);
       $router->delete('/{id}', [WorkSpaceController::class, 'deleteWorkSpace']);
    });
 
@@ -50,11 +51,16 @@ return function (Router $router) {
 
    $router->group(['prefix' => 'project', 'middleware' => 'auth'], function (Router $router) {
       $router->post('/add', [ProjectController::class, 'createNewProject']);
+   });
+
+   //--------------------------------------------------WIDGET--------------------------------------------------//
+
+   $router->group(['prefix' => 'widget', 'middleware' => 'auth'], function (Router $router) {
       $router->get('/{IDWorkSpace}', [WidgetController::class, 'GetAllWidgets']);
       $router->put('/{IDWorkSpace}/{IDWidget}', [WidgetController::class, 'ModifyWidget']);
    });
 
-//--------------------------------------------------TEAM--------------------------------------------------//
+   //--------------------------------------------------TEAM--------------------------------------------------//
 
    $router->group(['prefix'=> 'team','middleware' => 'auth'], function (Router $router) {
         $router->get('/', [TeamController::class, 'getTeamsByIDUser']);
@@ -75,4 +81,12 @@ return function (Router $router) {
          $router->get('/', [TaskController::class, 'getAllTasks']);
          $router->post('/create', [TaskController::class, 'createTask']);
        });     
+
+  //TODO
+   //--------------------------------------------------STASTUS--------------------------------------------------//   
+
+   $router->group(['prefix' => 'status', 'middleware' => 'auth'], function (Router $router) {
+      $router->get('/', [StatusController::class, 'getAllStatuses']);
+      $router->post('/create', [StatusController::class, 'createStatus']);
+   });
 };

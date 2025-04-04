@@ -70,6 +70,7 @@ class TeamService
          ->where('IsDeleted', false)
          ->first();
    }
+  
    public function leaveTeam($IDUser, $IDTeam)
    {
        // Tìm bản ghi TeamMember dựa trên IDUser và IDTeam
