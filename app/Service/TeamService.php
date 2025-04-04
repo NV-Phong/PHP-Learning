@@ -1,6 +1,7 @@
 <?php
 namespace WorkSpace\Service;
 
+use Exception;
 use WorkSpace\Model\Team;
 use WorkSpace\Model\TeamMember;
 
@@ -34,4 +35,76 @@ class TeamService
 
         return $teams;
     }
+
+    // Tạo một team mới
+   public function createTeam($data, $IDLeader)
+   {
+      $requiredFields = [
+         'teamName' => 'Team Name is required'
+      ];
+
+      foreach ($requiredFields as $field => $message) {
+         if (empty($data[$field])) {
+            throw new Exception($message);
+         }
+      }
+
+      $team = $this->findTeam('TeamName', $data['teamName'], $IDLeader);
+      if ($team) {
+         throw new Exception('Team already exists');
+      } else {
+         return Team::create([
+            "IDLeader" => $IDLeader,
+            "TeamName" => $data["teamName"],
+            "TeamSize" => 1,
+            "TeamDescription" => $data["teamDescription"] ?? null,
+         ]);
+      }
+   }
+
+   // Tìm một team theo trường cụ thể
+   public function findTeam($field, $value, $IDLeader)
+   {
+      return Team::where($field, $value)
+         ->where('IDLeader', $IDLeader)
+         ->where('IsDeleted', false)
+         ->first();
+   }
+  
+   public function leaveTeam($IDUser, $IDTeam)
+   {
+       // Tìm bản ghi TeamMember dựa trên IDUser và IDTeam
+       $teamMember = $this->teamMemberModel
+           ->where([
+               ['IDUser', $IDUser],
+               ['IDTeam', $IDTeam],
+               ['IsDeleted', false]
+           ])
+           ->first();
+
+       if (!$teamMember) {
+           throw new Exception('You are not a member of this team or the team does not exist');
+       }
+
+       // Kiểm tra xem team có tồn tại và user có phải leader không
+       $team = $this->teamModel
+           ->where('IDTeam', $IDTeam)
+           ->where('IsDeleted', 0)
+           ->first();
+
+       if (!$team) {
+           throw new Exception('Team does not exist');
+       }
+
+       if ($team->IDLeader == $IDUser) {
+           throw new Exception('Team leader cannot leave the team');
+       }
+
+       // Đánh dấu IsDeleted = true để rời team
+       $teamMember->IsDeleted = true;
+       $teamMember->save();
+
+       return true;
+   }
+
 }

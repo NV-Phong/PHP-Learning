@@ -1,3 +1,4 @@
+
 CREATE DATABASE WS_SERVER
 
 USE WS_SERVER
@@ -116,7 +117,7 @@ CREATE TABLE WIDGET
    PositionX            INT NOT NULL,
    PositionY            INT NOT NULL,
    IsDeleted            BOOLEAN NOT NULL DEFAULT FALSE,
-   FOREIGN KEY (IDWorkSpace) REFERENCES WORKSPACE (IDWorkSpace),
+   FOREIGN KEY (IDWorkSpace) REFERENCES WORkSPACE (IDWorkSpace),
    CONSTRAINT UNIQUE_Z_Index UNIQUE (IDWidget, Z_Index)
 )
 
@@ -193,9 +194,9 @@ CREATE TABLE TASK
 (
    IDTask               CHAR(36) PRIMARY KEY DEFAULT(UUID()),
    IDProject            CHAR(36) NOT NULL,
-   IDStatus             CHAR(36) NOT NULL,
-   IDTag                CHAR(36) NOT NULL,
-   IDAssignee           CHAR(36) NOT NULL,
+   IDStatus             CHAR(36),
+   IDTag                CHAR(36),
+   IDAssignee           CHAR(36),
    TaskName             VARCHAR(255) NOT NULL,
    Priority             ENUM('Low', 'Medium', 'High') NOT NULL DEFAULT 'Low',
    CreateAt             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

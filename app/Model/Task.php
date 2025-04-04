@@ -8,9 +8,11 @@ class Task extends Entity
    protected $fillable = ['IDProject', 'IDStatus', 'IDTag', 'IDAssignee', 'TaskName', 'Priority', 'CreateAt', 'StartDay', 'EndDay', 'DueDay', 'IsDeleted'];
    protected $attributes = [
       'Priority' => 'Low',
-      'CreateAt' => 'CURRENT_TIMESTAMP',
+    //  'CreateAt' => 'CURRENT_TIMESTAMP',
    ];
-
+   protected $casts = [
+      'CreateAt' => 'datetime',
+  ];
    public function project()
    {
       return $this->belongsTo(Project::class, 'IDProject', 'IDProject');
