@@ -73,6 +73,6 @@ return function (Router $router) {
 
       $router->group(['prefix'=> 'task','middleware' => 'auth'], function (Router $router) {
          $router->get('/', [TaskController::class, 'getAllTasks']);
-         //$router->post('/create', [StatusController::class, 'createStatus']);
+         $router->post('/create', [TaskController::class, 'createTask']);
        });     
 };

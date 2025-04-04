@@ -194,7 +194,7 @@ CREATE TABLE TASK
 (
    IDTask               CHAR(36) PRIMARY KEY DEFAULT(UUID()),
    IDProject            CHAR(36) NOT NULL,
-   IDStatus             CHAR(36) NOT NULL,
+   IDStatus             CHAR(36),
    IDTag                CHAR(36),
    IDAssignee           CHAR(36),
    TaskName             VARCHAR(255) NOT NULL,
