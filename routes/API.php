@@ -9,6 +9,7 @@ use WorkSpace\Controller\StatusController;
 use WorkSpace\Controller\ProjectController;
 use WorkSpace\Controller\NoteController;
 use WorkSpace\Controller\WidgetController;
+use WorkSpace\Controller\TaskController;
 use Middleware\Authenticate;
 
 return function (Router $router) {
@@ -61,11 +62,27 @@ return function (Router $router) {
 
    //--------------------------------------------------TEAM--------------------------------------------------//
 
-   $router->group(['prefix' => 'team', 'middleware' => 'auth'], function (Router $router) {
-      $router->get('/', [TeamController::class, 'getTeamsByIDUser']);
-      $router->post('/', [TeamController::class, 'createTeam']);
-   });
+   $router->group(['prefix'=> 'team','middleware' => 'auth'], function (Router $router) {
+        $router->get('/', [TeamController::class, 'getTeamsByIDUser']);
+        $router->post('/', [TeamController::class, 'createTeam']);
+        $router->delete('/{IDTeam}', [TeamController::class,'leaveTeam']);
 
+      });  
+
+//--------------------------------------------------STASTUS--------------------------------------------------//   
+
+   $router->group(['prefix'=> 'status','middleware' => 'auth'], function (Router $router) {
+        $router->get('/', [StatusController::class, 'getAllStatuses']);
+        $router->post('/create', [StatusController::class, 'createStatus']);
+      });
+ //--------------------------------------------------TASK--------------------------------------------------//   
+
+      $router->group(['prefix'=> 'task','middleware' => 'auth'], function (Router $router) {
+         $router->get('/', [TaskController::class, 'getAllTasks']);
+         $router->post('/create', [TaskController::class, 'createTask']);
+       });     
+
+  //TODO
    //--------------------------------------------------STASTUS--------------------------------------------------//   
 
    $router->group(['prefix' => 'status', 'middleware' => 'auth'], function (Router $router) {

@@ -47,5 +47,21 @@ class TeamController
          ], 400);
       }
    }
+   public function leaveTeam(Request $request, $IDTeam): JsonResponse
+   {
+       try {
+           $IDUser = $request->attributes->get('USER')['IDUser'];
+           $this->teamService->leaveTeam($IDUser, $IDTeam);
+
+           return new JsonResponse([
+               'message' => 'You have successfully left the group.!!!!',
+           ], 200);
+       } catch (Exception $e) {
+           return new JsonResponse([
+               'message' => $e->getMessage(),
+           ], 400);
+       }
+   }
+
 
 }

@@ -70,4 +70,41 @@ class TeamService
          ->where('IsDeleted', false)
          ->first();
    }
+  
+   public function leaveTeam($IDUser, $IDTeam)
+   {
+       // Tìm bản ghi TeamMember dựa trên IDUser và IDTeam
+       $teamMember = $this->teamMemberModel
+           ->where([
+               ['IDUser', $IDUser],
+               ['IDTeam', $IDTeam],
+               ['IsDeleted', false]
+           ])
+           ->first();
+
+       if (!$teamMember) {
+           throw new Exception('You are not a member of this team or the team does not exist');
+       }
+
+       // Kiểm tra xem team có tồn tại và user có phải leader không
+       $team = $this->teamModel
+           ->where('IDTeam', $IDTeam)
+           ->where('IsDeleted', 0)
+           ->first();
+
+       if (!$team) {
+           throw new Exception('Team does not exist');
+       }
+
+       if ($team->IDLeader == $IDUser) {
+           throw new Exception('Team leader cannot leave the team');
+       }
+
+       // Đánh dấu IsDeleted = true để rời team
+       $teamMember->IsDeleted = true;
+       $teamMember->save();
+
+       return true;
+   }
+
 }
