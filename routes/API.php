@@ -82,7 +82,8 @@ return function (Router $router) {
          $router->get('/', [TaskController::class, 'getAllTasks']);
          $router->post('/create', [TaskController::class, 'createTask']);
          $router->delete('/{IDTask}', [TaskController::class, 'deleteTask']);
-       });     
+         $router->patch('/{IDTask}/assignee', [TaskController::class, 'assignTask']);
+      });     
 
   //TODO
    //--------------------------------------------------STASTUS--------------------------------------------------//   

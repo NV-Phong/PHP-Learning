@@ -93,4 +93,21 @@ class TaskService
         $task->save();
         return ['message' => 'Task deleted successfully'];
     }
+    public function assignTask($IDTask,$IDUser, $IDAssignee)
+    {
+        $task = Task::where('IDTask', $IDTask)
+                    ->where('IsDeleted', false)
+                    ->first();
+
+        if (!$task) {
+            throw new \Exception('Task not found or already deleted');
+        }
+        if ($IDAssignee === null) {
+            $IDAssignee = $IDUser;
+        }
+        $task->IDAssignee = $IDAssignee;
+        $task->save();
+
+        return ['message' => 'Task assigned successfully'];
+    }
 }

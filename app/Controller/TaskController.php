@@ -91,4 +91,23 @@ class TaskController
             ], 400);
         }
     }
+    public function assignTask(Request $request, $IDTask): JsonResponse
+    {
+        try {
+            $IDUser = $request->attributes->get('USER')['IDUser'];
+    
+            $assigneeData = $request->json()->all();
+            $IDAssignee = $assigneeData['IDAssignee'] ?? null;
+    
+            $result = $this->taskService->assignTask($IDTask, $IDUser, $IDAssignee);
+    
+            return new JsonResponse([
+                'message' => $result['message']
+            ], 200);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
 }
