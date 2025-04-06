@@ -50,7 +50,8 @@ return function (Router $router) {
    //--------------------------------------------------PROJECT--------------------------------------------------//
 
    $router->group(['prefix' => 'project', 'middleware' => 'auth'], function (Router $router) {
-      $router->post('/add', [ProjectController::class, 'createNewProject']);
+      $router->post('/', [ProjectController::class, 'createNewProject']);
+      $router->get('/{teamId}', [ProjectController::class, 'getProjectsByTeamId']);
    });
 
    //--------------------------------------------------WIDGET--------------------------------------------------//
