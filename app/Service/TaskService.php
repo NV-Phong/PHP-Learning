@@ -70,4 +70,27 @@ class TaskService
         throw new \Exception("Error creating task: " . $e->getMessage());
     }
 }
+    public function deleteTask($IDTask, $IDUser)
+    {   
+        $task = Task::where('IDTask', $IDTask)
+                    ->where('IsDeleted', false)
+                    ->first();
+        if (!$task) {
+            throw new \Exception('Task not found or already deleted');
+        }
+        $project = \WorkSpace\Model\Project::where('IDProject', $task->IDProject)
+                    ->first();
+        if (!$project) {
+            throw new \Exception('Project not found');
+        }
+        $team = \WorkSpace\Model\Team::where('IDTeam', $project->IDTeam)
+                    ->where('IDLeader', $IDUser)
+                    ->first();
+        if (!$team) {
+            throw new \Exception('You do not have permission to delete this task');
+        }
+        $task->IsDeleted = true;
+        $task->save();
+        return ['message' => 'Task deleted successfully'];
+    }
 }
