@@ -126,4 +126,38 @@ class TeamService
        return true;
    }
 
+   public function deleteTeam($IDTeam, $IDUser)
+   {
+       // Kiểm tra team có tồn tại không
+       $team = $this->teamModel
+           ->where('IDTeam', $IDTeam)
+           ->where('IsDeleted', 0)
+           ->first();
+
+       if (!$team) {
+           throw new Exception('Team does not exist');
+       }
+
+       // Kiểm tra quyền leader
+       if ($team->IDLeader != $IDUser) {
+           throw new Exception('Only team leader can delete the team');
+       }
+
+       try {
+           // Đánh dấu xóa mềm team
+           $team->IsDeleted = true;
+           $team->save();
+
+           // Đánh dấu xóa mềm tất cả thành viên trong team
+           $this->teamMemberModel
+               ->where('IDTeam', $IDTeam)
+               ->where('IsDeleted', false)
+               ->update(['IsDeleted' => true]);
+
+           return true;
+       } catch (Exception $e) {
+           throw new Exception("Failed to delete team: " . $e->getMessage());
+       }
+   }
+
 }
