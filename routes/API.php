@@ -82,6 +82,7 @@ return function (Router $router) {
       $router->group(['prefix'=> 'task','middleware' => 'auth'], function (Router $router) {
          $router->get('/', [TaskController::class, 'getAllTasks']);
          $router->post('/create', [TaskController::class, 'createTask']);
+         $router->delete('/{IDTask}', [TaskController::class, 'deleteTask']);
        });     
 
   //TODO
