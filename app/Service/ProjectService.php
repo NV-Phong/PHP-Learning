@@ -19,7 +19,7 @@ class ProjectService
     public function createNewProject($data)
     {
         $requiredFields = [
-            "ProjectName" => "Project name is not blank"
+            "projectName" => "Project name is not blank"
         ];
 
         foreach ($requiredFields as $field => $message) {
@@ -36,7 +36,7 @@ class ProjectService
             throw new Exception('Team does not exist');
         }
 
-        $existProject = Project::where('ProjectName', $data['ProjectName'])
+        $existProject = Project::where('ProjectName', $data['projectName'])
             ->where('IDTeam', $data['IDTeam'])
             ->where('IsDeleted', false)
             ->first();
@@ -46,9 +46,29 @@ class ProjectService
         } else {
             return $this->project->create([
                 "IDTeam" => $data["IDTeam"],
-                "ProjectName" => $data["ProjectName"],
-                "ProjectDescription" => $data["ProjectDescription"],
+                "ProjectName" => $data["projectName"],
+                "ProjectDescription" => $data["projectDescription"],
             ]);
         }
+    }
+
+    // Lấy danh sách dự án theo IDTeam
+    public function getProjectsByTeamId($teamId)
+    {
+        if (empty($teamId)) {
+            throw new Exception('Team ID is required');
+        }
+
+        $existTeam = Team::where('IDTeam', $teamId)
+            ->where('IsDeleted', false)
+            ->first();
+
+        if (!$existTeam) {
+            throw new Exception('Team does not exist');
+        }
+
+        return Project::where('IDTeam', $teamId)
+            ->where('IsDeleted', false)
+            ->get();
     }
 }

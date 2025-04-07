@@ -77,4 +77,18 @@ class TaskController
         ], 400);
     }
 }
+    public function deleteTask(Request $request, $IDTask): JsonResponse
+    {
+        try {
+            $IDUser = $request->attributes->get('USER')['IDUser'];
+            $result = $this->taskService->deleteTask($IDTask, $IDUser);
+            return new JsonResponse([
+                'message' => $result['message']
+            ], 200);
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'message' => $e->getMessage(),
+            ], 400);
+        }
+    }
 }
