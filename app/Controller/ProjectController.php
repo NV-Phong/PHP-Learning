@@ -30,4 +30,20 @@ class ProjectController
             ], 400);
         }
     }
+
+    public function getProjectsByTeamId(Request $request): JsonResponse
+    {
+        try {
+            $teamId = $request->route('teamId');
+            $projects = $this->projectService->getProjectsByTeamId($teamId);
+            return new JsonResponse([
+                'message' => 'Get projects successfully',
+                'data' => $projects
+            ], 200);
+        } catch (Exception $exception) {
+            return new JsonResponse([
+                'message' => $exception->getMessage(),
+            ], 400);
+        }
+    }
 }
