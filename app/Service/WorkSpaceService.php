@@ -2,13 +2,17 @@
 namespace WorkSpace\Service;
 use Exception;
 use WorkSpace\Model\WorkSpace;
+use WorkSpace\Model\WorkSpaceAccess;
 
 class WorkSpaceService
 {
    private $workSpace;
-   public function __construct(WorkSpace $workSpace)
+
+   private $workSpaceAccess;
+   public function __construct(WorkSpace $workSpace, WorkSpaceAccess $workSpaceAccess)
    {
       $this->workSpace = $workSpace;
+      $this->workSpaceAccess = $workSpaceAccess;
    }
 
    public function getAllWorkSpaces($IDUser)
@@ -84,5 +88,26 @@ class WorkSpaceService
     $workSpace->save();
 
     return ['message' => 'WorkSpace deleted successfully'];
-}
+   }
+
+   public function pathWorkSpaceAccess($IDWorkSpace, $collaboratorId, $permission)
+    {
+        if (!in_array($permission, ['Owner', 'Edit', 'View'])) {
+            throw new Exception('Giá trị quyền không hợp lệ');
+        }
+
+        $access = WorkSpaceAccess::where('IDWorkSpace', $IDWorkSpace)
+            ->where('IDCollaborator', $collaboratorId)
+            ->where('IsDeleted', false)
+            ->first();
+
+        if (!$access) {
+            throw new Exception('Không tìm thấy quyền truy cập tương ứng');
+        }
+
+        $access->Permission = $permission;
+        $access->save();
+
+        return $access;
+    }
 }

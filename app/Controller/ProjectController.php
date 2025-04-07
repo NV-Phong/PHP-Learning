@@ -7,11 +7,12 @@ use Illuminate\Http\JsonResponse;
 use Exception;
 use WorkSpace\Service\ProjectService;
 
+
 class ProjectController
 {
     private ProjectService $projectService;
 
-    public function __construct(ProjectService $projectService)
+    public function __construct(ProjectService $projectService )
     {
         $this->projectService = $projectService;
     }
@@ -46,4 +47,26 @@ class ProjectController
             ], 400);
         }
     }
+
+    public function patchProjectPermission(Request $request): JsonResponse
+    {
+        try {
+            $projectId = $request->input('IDProject');
+            $collaboratorId = $request->input('IDCollaborator');
+            $permission = $request->input('Permission');
+
+            $result = $this->projectService
+                ->pathProjectAccess($projectId, $collaboratorId, $permission);
+
+            return new JsonResponse([
+                'message' => 'Update permission successfully',
+                'data' => $result
+            ], 200);
+        } catch (Exception $exception) {
+            return new JsonResponse([
+                'message' => $exception->getMessage()
+            ], 400);
+        }
+    }
+    
 }

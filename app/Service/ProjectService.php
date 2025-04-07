@@ -3,16 +3,21 @@ namespace WorkSpace\Service;
 use Exception;
 use WorkSpace\Model\Project;
 use WorkSpace\Model\Team;
+use WorkSpace\Model\ProjectAccess;
 
 class ProjectService
 {
     private $project;
     private $team;
+    private $projectAccessModel;
 
-    public function __construct(Project $project, Team $team)
+
+    public function __construct(Project $project, Team $team ,ProjectAccess $projectAccessModel)
     {
         $this->project = $project;
         $this->team = $team;
+        $this-> $projectAccessModel = $projectAccessModel;
+
     }
 
     //tạo mới 1 project
@@ -71,4 +76,26 @@ class ProjectService
             ->where('IsDeleted', false)
             ->get();
     }
+
+    public function pathProjectAccess($projectId, $collaboratorId, $permission)
+    {
+        if (!in_array($permission, ['Owner', 'Edit', 'View'])) {
+            throw new Exception('Giá trị quyền không hợp lệ');
+        }
+
+        $access = ProjectAccess::where('IDProject', $projectId)
+            ->where('IDCollaborator', $collaboratorId)
+            ->where('IsDeleted', false)
+            ->first();
+
+        if (!$access) {
+            throw new Exception('Không tìm thấy quyền truy cập tương ứng');
+        }
+
+        $access->Permission = $permission;
+        $access->save();
+
+        return $access;
+    }
+
 }

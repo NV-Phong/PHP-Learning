@@ -38,6 +38,7 @@ return function (Router $router) {
       $router->post('/', [WorkSpaceController::class, 'createWorkSpace']);
       $router->get('/{IDWorkSpace}', [WorkSpaceController::class, 'getWorkSpacesByIDWorkSpace']);
       $router->delete('/{id}', [WorkSpaceController::class, 'deleteWorkSpace']);
+      $router->patch('/workspace-permission', [WorkSpaceController::class, 'patchWorkSpacePermission']);
    });
 
    //--------------------------------------------------NOTE--------------------------------------------------//
@@ -52,6 +53,7 @@ return function (Router $router) {
    $router->group(['prefix' => 'project', 'middleware' => 'auth'], function (Router $router) {
       $router->post('/', [ProjectController::class, 'createNewProject']);
       $router->get('/{teamId}', [ProjectController::class, 'getProjectsByTeamId']);
+      $router->patch('/project-permission', [ProjectController::class, 'patchProjectPermission']);
    });
 
    //--------------------------------------------------WIDGET--------------------------------------------------//

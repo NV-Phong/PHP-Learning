@@ -75,5 +75,25 @@ class WorkSpaceController
          ], 400);
       }
    }
+   public function patchWorkSpacePermission(Request $request): JsonResponse
+    {
+        try {
+            $workspaceId = $request->input('IDWorkSpace');
+            $collaboratorId = $request->input('IDCollaborator');
+            $permission = $request->input('Permission');
+
+            $result = $this->WSService
+                ->pathWorkSpaceAccess($workspaceId, $collaboratorId, $permission);
+
+            return new JsonResponse([
+                'message' => 'Update permission successfully',
+                'data' => $result
+            ], 200);
+        } catch (Exception $exception) {
+            return new JsonResponse([
+                'message' => $exception->getMessage()
+            ], 400);
+        }
+    }
 
 }
