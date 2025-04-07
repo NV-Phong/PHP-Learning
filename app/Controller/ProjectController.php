@@ -46,4 +46,18 @@ class ProjectController
             ], 400);
         }
     }
+    public function deleteProject(Request $request, $IDProject): JsonResponse
+    {
+        try {
+            $this->projectService->deleteProject($IDProject);
+            return new JsonResponse([
+                'message' => 'Deleted Project Successfully'
+            ], 200);
+        } catch (Exception $exception) {
+            return new JsonResponse([
+                'message' => $exception->getMessage(),
+            ], 400);
+        }
+    }
+
 }

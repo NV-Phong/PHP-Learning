@@ -52,6 +52,7 @@ return function (Router $router) {
    $router->group(['prefix' => 'project', 'middleware' => 'auth'], function (Router $router) {
       $router->post('/', [ProjectController::class, 'createNewProject']);
       $router->get('/{teamId}', [ProjectController::class, 'getProjectsByTeamId']);
+      $router->delete('/{IDProject}', [ProjectController::class, 'deleteProject']);
    });
 
    //--------------------------------------------------WIDGET--------------------------------------------------//
