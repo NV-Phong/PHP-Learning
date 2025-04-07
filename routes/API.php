@@ -50,7 +50,8 @@ return function (Router $router) {
    //--------------------------------------------------PROJECT--------------------------------------------------//
 
    $router->group(['prefix' => 'project', 'middleware' => 'auth'], function (Router $router) {
-      $router->post('/add', [ProjectController::class, 'createNewProject']);
+      $router->post('/', [ProjectController::class, 'createNewProject']);
+      $router->get('/{teamId}', [ProjectController::class, 'getProjectsByTeamId']);
    });
 
    //--------------------------------------------------WIDGET--------------------------------------------------//
@@ -81,6 +82,7 @@ return function (Router $router) {
       $router->group(['prefix'=> 'task','middleware' => 'auth'], function (Router $router) {
          $router->get('/', [TaskController::class, 'getAllTasks']);
          $router->post('/create', [TaskController::class, 'createTask']);
+         $router->delete('/{IDTask}', [TaskController::class, 'deleteTask']);
        });     
 
   //TODO
