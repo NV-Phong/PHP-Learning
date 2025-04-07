@@ -71,4 +71,27 @@ class ProjectService
             ->where('IsDeleted', false)
             ->get();
     }
+    public function deleteProject($projectId)
+    {
+        if (empty($projectId)) {
+            throw new Exception('Project ID is required');
+        }
+
+        $project = Project::where('IDProject', $projectId)
+            ->where('IsDeleted', false)
+            ->first();
+
+        if (!$project) {
+            throw new Exception('Project does not exist or has already been deleted');
+        }
+
+        $project->IsDeleted = true; 
+        
+        if ($project->save()) {
+            return true; 
+        }
+        
+        throw new Exception('Failed to delete project');
+    }
+
 }
