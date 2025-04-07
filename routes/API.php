@@ -11,6 +11,7 @@ use WorkSpace\Controller\NoteController;
 use WorkSpace\Controller\WidgetController;
 use WorkSpace\Controller\TaskController;
 use Middleware\Authenticate;
+use WorkSpace\Controller\NotificationController;
 
 return function (Router $router) {
    $router->aliasMiddleware('auth', Authenticate::class);
@@ -86,7 +87,15 @@ return function (Router $router) {
          $router->delete('/{IDTask}', [TaskController::class, 'deleteTask']);
        });     
 
-  //TODO
+   //--------------------------------------------------NOTIFICATION--------------------------------------------------//   
+
+   $router->group(['prefix'=> 'notification','middleware' => 'auth'], function (Router $router) {
+      $router->post('/send-invite', [NotificationController::class, 'sendTeamInvite']);
+      $router->get('/user/{Email}', [NotificationController::class, 'getUserNotifications']);
+      $router->post('/response', [NotificationController::class, 'handleInviteResponse']);
+   });
+
+   //TODO
    //--------------------------------------------------STASTUS--------------------------------------------------//   
 
    $router->group(['prefix' => 'status', 'middleware' => 'auth'], function (Router $router) {
