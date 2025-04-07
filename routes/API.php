@@ -83,6 +83,7 @@ return function (Router $router) {
          $router->post('/create', [TaskController::class, 'createTask']);
          $router->delete('/{IDTask}', [TaskController::class, 'deleteTask']);
          $router->patch('/{IDTask}/assignee', [TaskController::class, 'assignTask']);
+         $router->patch('/{IDTask}/unassignee', [TaskController::class, 'unassignTask']);
       });     
 
   //TODO
