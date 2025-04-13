@@ -19,7 +19,7 @@ class StatusController
     {
         try {
             $IDUser = $request->attributes->get('USER')['IDUser'];
-            $projectId = $request->query('project_id');
+            $projectId = $request->route('IDProject');
             $statuses = $this->statusService->getAllStatuses($projectId)->makeHidden('IDProject');
 
             return new JsonResponse([

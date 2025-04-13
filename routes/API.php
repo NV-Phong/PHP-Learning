@@ -72,11 +72,12 @@ return function (Router $router) {
         $router->delete('/delete/{IDTeam}', [TeamController::class,'deleteTeam']);
       });  
 
-//--------------------------------------------------STASTUS--------------------------------------------------//   
+//--------------------------------------------------STATUS--------------------------------------------------//   
 
    $router->group(['prefix'=> 'status','middleware' => 'auth'], function (Router $router) {
         $router->get('/', [StatusController::class, 'getAllStatuses']);
         $router->post('/create', [StatusController::class, 'createStatus']);
+        $router->get('/{IDProject}', [StatusController::class, 'getAllStatuses']);
         $router->delete('/{IDStatus}', [StatusController::class, 'deleteStatus']);
       });
  //--------------------------------------------------TASK--------------------------------------------------//   
@@ -95,11 +96,4 @@ return function (Router $router) {
       $router->post('/response', [NotificationController::class, 'handleInviteResponse']);
    });
 
-   //TODO
-   //--------------------------------------------------STASTUS--------------------------------------------------//   
-
-   $router->group(['prefix' => 'status', 'middleware' => 'auth'], function (Router $router) {
-      $router->get('/', [StatusController::class, 'getAllStatuses']);
-      $router->post('/create', [StatusController::class, 'createStatus']);
-   });
 };
