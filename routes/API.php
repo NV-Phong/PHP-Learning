@@ -82,11 +82,12 @@ return function (Router $router) {
       });
  //--------------------------------------------------TASK--------------------------------------------------//   
 
-      $router->group(['prefix'=> 'task','middleware' => 'auth'], function (Router $router) {
+      $router->group(['prefix'=> 'task', 'middleware' => 'auth'], function (Router $router) {
          $router->get('/', [TaskController::class, 'getAllTasks']);
          $router->post('/', [TaskController::class, 'createTask']);
          $router->get('/{IDProject}', [TaskController::class, 'getAllTasks']);
          $router->delete('/{IDTask}', [TaskController::class, 'deleteTask']);
+         $router->patch('/{IDTask}', [TaskController::class, 'updateTask']);
        });     
 
    //--------------------------------------------------NOTIFICATION--------------------------------------------------//   

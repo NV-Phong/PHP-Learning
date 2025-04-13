@@ -91,4 +91,15 @@ class TaskController
             ], 400);
         }
     }
+
+    public function updateTask(Request $request, $IDTask): JsonResponse
+    {
+        try {
+            $data = $request->all();
+            $this->taskService->updateTask($IDTask, $data);
+            return new JsonResponse(['message' => 'Task updated successfully']);
+        } catch (Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
+    }
 }

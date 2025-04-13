@@ -97,4 +97,39 @@ class TaskService
         $task->save();
         return ['message' => 'Task deleted successfully'];
     }
+
+    public function updateTask($IDTask, array $data): bool
+    {
+        try {
+            $task = Task::where('IDTask', $IDTask)
+                ->where('IsDeleted', false)
+                ->first();
+            if (!$task) {
+                throw new Exception('Task not found or already deleted');
+            }
+
+            // Kiểm tra Priority nếu có
+            if (isset($data['Priority']) && !in_array($data['Priority'], ['Low', 'Medium', 'High'])) {
+                throw new Exception("Invalid Priority value. Must be Low, Medium, or High.");
+            }
+
+            // Cập nhật task
+            $task->update([
+                'TaskName' => $data['TaskName'] ?? $task->TaskName,
+                'TaskDescription' => $data['TaskDescription'] ?? $task->TaskDescription,
+                'IDStatus' => $data['IDStatus'] ?? $task->IDStatus,
+                'IDTag' => $data['IDTag'] ?? $task->IDTag,
+                'IDAssignee' => $data['IDAssignee'] ?? $task->IDAssignee,
+                'Priority' => $data['Priority'] ?? $task->Priority,
+                'StartDay' => $data['StartDay'] ?? $task->StartDay,
+                'EndDay' => $data['EndDay'] ?? $task->EndDay,
+                'DueDay' => $data['DueDay'] ?? $task->DueDay,
+            ]);
+
+            return true;
+
+        } catch (Exception $e) {
+            throw new Exception("Error updating task: " . $e->getMessage());
+        }
+    }
 }
