@@ -5,7 +5,7 @@ class Task extends Entity
 {
    protected $table = 'TASK';
    protected $primaryKey = 'IDTask';
-   protected $fillable = ['IDProject', 'IDStatus', 'IDTag', 'IDAssignee', 'TaskName', 'Priority', 'CreateAt', 'StartDay', 'EndDay', 'DueDay', 'IsDeleted'];
+   protected $fillable = ['IDProject', 'IDStatus', 'IDTag', 'IDAssignee', 'TaskName','TaskDescription', 'Priority', 'CreateAt', 'StartDay', 'EndDay', 'DueDay', 'IsDeleted'];
    protected $attributes = [
       'Priority' => 'Low',
     //  'CreateAt' => 'CURRENT_TIMESTAMP',

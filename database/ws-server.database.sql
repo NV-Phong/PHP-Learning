@@ -198,6 +198,7 @@ CREATE TABLE TASK
    IDTag                CHAR(36) NULL,
    IDAssignee           CHAR(36) NULL,
    TaskName             VARCHAR(255) NOT NULL,
+   TaskDescription      TEXT,
    Priority             ENUM('Low', 'Medium', 'High') NOT NULL DEFAULT 'Low',
    CreateAt             TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
    StartDay             TIMESTAMP,

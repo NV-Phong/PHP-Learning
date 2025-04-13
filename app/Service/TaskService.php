@@ -56,6 +56,7 @@ class TaskService
             $task = $this->taskModel->create([
                 'IDProject' => $data['IDProject'],
                 'TaskName' => $data['TaskName'],
+                'TaskDescription' => $data['TaskDescription'],
                 'IDStatus' => $data['IDStatus'] ?? null,
                 'IDTag' => $data['IDTag'] ?? null,
                 'IDAssignee' => $data['IDAssignee'] ?? null,
