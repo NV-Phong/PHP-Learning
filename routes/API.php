@@ -76,7 +76,7 @@ return function (Router $router) {
 
    $router->group(['prefix'=> 'status','middleware' => 'auth'], function (Router $router) {
         $router->get('/', [StatusController::class, 'getAllStatuses']);
-        $router->post('/create', [StatusController::class, 'createStatus']);
+        $router->post('/', [StatusController::class, 'createStatus']);
         $router->get('/{IDProject}', [StatusController::class, 'getAllStatuses']);
         $router->delete('/{IDStatus}', [StatusController::class, 'deleteStatus']);
       });
@@ -84,7 +84,8 @@ return function (Router $router) {
 
       $router->group(['prefix'=> 'task','middleware' => 'auth'], function (Router $router) {
          $router->get('/', [TaskController::class, 'getAllTasks']);
-         $router->post('/create', [TaskController::class, 'createTask']);
+         $router->post('/', [TaskController::class, 'createTask']);
+         $router->get('/{IDProject}', [TaskController::class, 'getAllTasks']);
          $router->delete('/{IDTask}', [TaskController::class, 'deleteTask']);
        });     
 

@@ -22,7 +22,7 @@ class TaskController
             $IDUser = $request->attributes->get('USER')['IDUser'];
             
             // Lấy IDProject từ request
-            $IDProject = $request->input('IDProject');
+            $IDProject = $request->route('IDProject');
     
             if (!$IDProject) {
                 return new JsonResponse([
