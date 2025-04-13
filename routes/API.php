@@ -45,6 +45,7 @@ return function (Router $router) {
    
    $router->group(['prefix' => 'note', 'middleware' => 'auth'], function (Router $router) {
       $router->post('/',[NoteController::class,'createNotewithWidget']);
+      $router->get('/',[NoteController::class,'getListNotes']);
       $router->put('/modify/{IDNote}', [NoteController::class, 'ModifyNote']);
    });
 

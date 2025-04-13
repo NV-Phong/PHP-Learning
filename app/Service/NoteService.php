@@ -98,4 +98,11 @@ class NoteService
             throw new Exception($exception->getMessage());
         }
     }
+
+    public function getListNotes($IDUser)
+    {
+        return Note::where('Author', $IDUser)
+            ->where('IsDeleted', false)
+            ->get();
+    }
 }
